@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #622599 0%, #8a3ab9 100%);
+        color: #333;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+      }
+      .container {
+        background: #ffffff;
+        padding: 40px 30px;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        width: 100%;
+        max-width: 550px;
+      }
+      .header { text-align: center; margin-bottom: 25px; }
+      .header img { width: 90px; margin-bottom: 10px; }
+      h2 { color: #622599; margin: 0; font-size: 24px; }
+      p.subtitle { color: #666; margin-top: 5px; font-size: 14px; }
+      fieldset {
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        margin-top: 20px;
+        padding: 10px 15px 15px;
+      }
+      legend { color: #622599; font-weight: 700; padding: 0 8px; }
+      label { display: block; margin-top: 15px; font-weight: 600; color: #444; }
+      input, select {
+        width: 100%;
+        padding: 12px;
+        margin-top: 8px;
+        border: 1px solid #ccd0d5;
+        border-radius: 6px;
+        box-sizing: border-box;
+        font-size: 15px;
+        transition: border-color 0.3s;
+      }
+      input:focus, select:focus {
+        border-color: #622599;
+        outline: none;
+        box-shadow: 0 0 5px rgba(98, 37, 153, 0.2);
+      }
+      .opcional { font-weight: normal; color: #888; font-size: 0.85em; font-style: italic; }
+      button {
+        width: 100%;
+        margin-top: 30px;
+        padding: 14px;
+        background-color: #622599;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s, transform 0.1s;
+      }
+      button:hover { background-color: #4a1c75; }
+      button:active { transform: scale(0.98); }
+      button:disabled { background-color: #bdc3c7; cursor: not-allowed; transform: none; }
+      #status { display: none; text-align: center; margin-top: 15px; color: #622599; font-weight: bold; }
+
+      @media (max-width: 600px) {
+        body { padding: 15px 10px; }
+        .container { padding: 25px 20px; }
+        h2 { font-size: 20px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h2>Autorização de Imagem</h2>
+        <p class="subtitle">Preencha os dados para gerar o documento (Padrão UEB)</p>
+      </div>
+
+      <form id="formAutorizacao" onsubmit="enviarFormulario(event)">
+
+        <label for="grupo">Grupo Escoteiro:</label>
+        <select id="grupo" name="grupo" required>
+          <option value="">Selecione o Grupo Escoteiro...</option>
+          <option value="19° Grupo Escoteiro São José">19° Grupo Escoteiro São José</option>
+          <option value="92° Grupo Escoteiro Guimarães Rosa">92° Grupo Escoteiro Guimarães Rosa</option>
+          <option value="99° Grupo Escoteiro Nova Geração">99° Grupo Escoteiro Nova Geração</option>
+          <option value="115° Grupo Escoteiro Tiradentes">115° Grupo Escoteiro Tiradentes</option>
+          <option value="140° Grupo Escoteiro Imaculada">140° Grupo Escoteiro Imaculada</option>
+          <option value="146° Grupo Escoteiro Major Anatólio A. de Assis">146° Grupo Escoteiro Major Anatólio A. de Assis</option>
+          <option value="170° Grupo Escoteiro Darcy Ribeiro">170° Grupo Escoteiro Darcy Ribeiro</option>
+          <option value="179° Grupo Escoteiro Taiobeiras">179° Grupo Escoteiro Taiobeiras</option>
+          <option value="223° Grupo Escoteiro do Mar Piraporé">223° Grupo Escoteiro do Mar Piraporé</option>
+        </select>
+
+        <fieldset>
+          <legend>Dados do(a) Menor</legend>
+
+          <label for="nomeJovem">Nome do(a) Menor <span class="opcional">(Opcional)</span>:</label>
+          <input type="text" id="nomeJovem" name="nomeJovem" placeholder="Deixe em branco para preencher à mão">
+
+          <label for="dataNascimento">Data de Nascimento <span class="opcional">(Opcional)</span>:</label>
+          <input type="date" id="dataNascimento" name="dataNascimento">
+
+          <label for="cpfMenor">CPF <span class="opcional">(Opcional)</span>:</label>
+          <input type="text" id="cpfMenor" name="cpfMenor" placeholder="Deixe em branco para preencher à mão">
+
+          <label for="rgMenor">RG <span class="opcional">(Opcional)</span>:</label>
+          <input type="text" id="rgMenor" name="rgMenor" placeholder="Deixe em branco para preencher à mão">
+        </fieldset>
+
+        <fieldset>
+          <legend>Dados do Responsável Legal</legend>
+
+          <label for="nomeResponsavel">Nome do Responsável <span class="opcional">(Opcional)</span>:</label>
+          <input type="text" id="nomeResponsavel" name="nomeResponsavel" placeholder="Deixe em branco para preencher à mão">
+
+          <label for="cpfResponsavel">CPF <span class="opcional">(Opcional)</span>:</label>
+          <input type="text" id="cpfResponsavel" name="cpfResponsavel" placeholder="Deixe em branco para preencher à mão">
+
+          <label for="rgResponsavel">RG <span class="opcional">(Opcional)</span>:</label>
+          <input type="text" id="rgResponsavel" name="rgResponsavel" placeholder="Deixe em branco para preencher à mão">
+        </fieldset>
+
+        <button type="submit" id="btnBaixar">Baixar PDF</button>
+        <div id="status">Gerando documento, por favor aguarde...</div>
+      </form>
+    </div>
+
+    <script>
+      function enviarFormulario(event) {
+        event.preventDefault();
+
+        const form = document.getElementById('formAutorizacao');
+        const btnBaixar = document.getElementById('btnBaixar');
+        const status = document.getElementById('status');
+
+        btnBaixar.disabled = true;
+        btnBaixar.innerText = "Processando...";
+        status.style.display = 'block';
+
+        const dados = {
+          grupo: form.grupo.value,
+          nomeJovem: form.nomeJovem.value,
+          dataNascimento: form.dataNascimento.value,
+          cpfMenor: form.cpfMenor.value,
+          rgMenor: form.rgMenor.value,
+          nomeResponsavel: form.nomeResponsavel.value,
+          cpfResponsavel: form.cpfResponsavel.value,
+          rgResponsavel: form.rgResponsavel.value
+        };
+
+        google.script.run
+          .withSuccessHandler(function(resposta) {
+            const link = document.createElement('a');
+            link.href = 'data:' + resposta.tipoMime + ';base64,' + resposta.dadosBase64;
+            link.download = resposta.nomeArquivo;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            btnBaixar.disabled = false;
+            btnBaixar.innerText = "Baixar PDF";
+            status.style.display = 'none';
+          })
+          .withFailureHandler(function(erro) {
+            alert('Erro ao gerar o PDF. Verifique se o documento original não foi apagado ou teve a permissão alterada.');
+            console.error(erro);
+            btnBaixar.disabled = false;
+            btnBaixar.innerText = "Baixar PDF";
+            status.style.display = 'none';
+          })
+          .gerarPDF(dados);
+      }
+    </script>
+  </body>
+</html>
